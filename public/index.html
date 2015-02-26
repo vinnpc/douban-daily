@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf8">
+  <title>Douban Daily</title>
+  <meta name="description" content="Douban Daily, 豆瓣一刻第三方网页版">
+  <meta name="keywords" content="豆瓣,一刻,阅读,网页版">
+  <meta name="author" content="Vin, http://vinnpc.github.io">
+
+  <link rel="stylesheet" href="/vendor/css/normalize.css">
+  <link rel="stylesheet" href="/vendor/css/animate.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body ng-app="yikeApp">
+  <div class="l-container">
+    <div>
+      <ng-view />
+    </div>
+
+    <div class="l-content">
+      <iframe class="post-container" ng-src="{{showingPostUrl}}" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="yike-index.html">
+
+    <div class="l-nav">
+      <div class="nav-container">
+        <ul class="nav-container">
+          <li ng-repeat="column in columns" class="nav-item" ng-class="{current: currentColumnId == column.id}">
+            <a class="nav-link" href="{{url}}" ng-init="url = column.id == 0 ? '#/': '#/column/'+column.id" ng-bind="column.name"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="l-preview">
+      <div class="l-preview-inner">
+        <div class="preview-section" ng-class="{'preview-section-column': currentColumnId != 0}" ng-repeat="previewSection in previews" ng-init="date=previewSection[0].date">
+          <div class="preview-date" ng-if="currentColumnId == 0" ng-init="d = formatDate(date)">
+            <span class="date" ng-bind="d.date"></span>
+            <span class="month" ng-bind="d.mon"></span>
+          </div>
+          <div class="preview-item" ng-repeat="previewItem in previewSection" ng-click="showPost(previewItem.url)">
+            <div class="preview-column" ng-if="!!previewItem.column && currentColumnId == 0">
+              <span class="preview-column-text" ng-bind="previewItem.column"></span>
+            </div>
+            <div class="preview-content">
+              <h2 class="preview-title" ng-bind="previewItem.title"></h2>
+              <div class="preview-abstract">
+                <p ng-if="!!previewItem.abstract" ng-bind="previewItem.abstract"></p>
+                <img ng-if="!!previewItem.thumbs.length" ng-init="thumb = previewItem.thumbs[0].small" ng-src="{{thumb.url}}" width="{{thumb.width}}" height="{{thumb.height}}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="end-of-the-world">
+        <p>在世界的尽头呼唤……</p>
+      </div>
+    </div>
+  </script>
+
+  <script src="/vendor/js/jquery.min.js"></script>
+  <script src="/vendor/js/angular.min.js"></script>
+  <script src="/vendor/js/angular-animate.min.js"></script>
+  <script src="/vendor/js/angular-route.min.js"></script>
+  <script src="/vendor/js/angular-scroll.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/ctrl.js"></script>
+  <script src="/js/storage.js"></script>
+  <script src="/js/runtime-storage.js"></script>
+
+</body>
+
+</html>
