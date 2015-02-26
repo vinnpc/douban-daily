@@ -1,2 +1,4 @@
-# douban-daily
-Douban Daily / 豆瓣一刻第三方网页版
+#douban-daily
+
+
+[http://doubandaily.coding.io](http://doubandaily.coding.io)
